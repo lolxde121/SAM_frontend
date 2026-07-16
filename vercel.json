@@ -1,0 +1,21 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "http://localhost:7070/api/:path*"
+    },
+    {
+      "source": "/alertas/:path*",
+      "destination": "http://localhost:7070/alertas/:path*"
+    },
+    {
+      "source": "/visitas/:path*",
+      "destination": "http://localhost:7070/visitas/:path*"
+    },
+    {
+      "source": "/cosechas/:path*",
+      "destination": "http://localhost:7070/cosechas/:path*"
+    }
+  ]
+}
