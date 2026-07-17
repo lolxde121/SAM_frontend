@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <script src="../shared/js/mockFetch.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAM - Mantenimiento del módulo</title>
@@ -132,8 +131,8 @@
                     <!-- Fila 4: Descripción -->
                     <div class="form-group mt-3 position-relative">
                         <label class="form-label">DESCRIPCIÓN</label>
-                        <textarea id="desc-mantenimiento" class="input-field textarea-field" rows="4" maxlength="500" required>Se recalibró la celda de carga con una pesa patrón de 10 kg. La desviación previa era de +0.8 kg; tras el ajuste la lectura quedó dentro de ±0.1 kg.</textarea>
-                        <span id="char-count" class="char-counter">148 / 500</span>
+                        <textarea id="desc-mantenimiento" class="input-field textarea-field" rows="4" maxlength="500" placeholder="Escribe los detalles del mantenimiento realizado..." required></textarea>
+                        <span id="char-count" class="char-counter">0 / 500</span>
                     </div>
 
                     <!-- Info Alert -->
@@ -275,6 +274,7 @@
                 <span>Mi Cuenta</span>
             </a>
         </nav>
+        
 
     <script src="../shared/js/sidebar.js" defer></script>
     <script src="../shared/js/mantenimientoModulo.js"></script>

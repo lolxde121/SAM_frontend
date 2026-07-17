@@ -50,6 +50,14 @@
             localStorage.setItem('rolUsuario', 'apicultor');
             localStorage.setItem('usuarioLogueadoNombre', 'Edgar Beekeep');
         }
+        if (!localStorage.getItem('mantenimientos')) {
+            localStorage.setItem('mantenimientos', JSON.stringify([
+                {id: 1, colmena_id: 3, tipo_evento: "limpieza", fecha: "2026-05-28", descripcion: "Se retiró propóleo de la sonda de temperatura."},
+                {id: 2, colmena_id: 3, tipo_evento: "revision", fecha: "2026-04-14", descripcion: "Inspección general durante visita al apiario."},
+                {id: 3, colmena_id: 3, tipo_evento: "recalibracion", fecha: "2026-03-02", descripcion: "Ajuste de celda de carga, desviación ±0.1 kg."},
+                {id: 4, colmena_id: 3, tipo_evento: "instalacion", fecha: "2026-02-12", descripcion: "Módulo instalado y verificado en C-03."}
+            ]));
+        }
     }
 
     initLocalStorage();
@@ -557,6 +565,60 @@
                 { id: 2, nombre: "Cálido" },
                 { id: 3, nombre: "Húmedo" }
             ]);
+        }
+
+        // --- RUTA: /api/mantenimiento ---
+        if (path.startsWith('/api/mantenimiento')) {
+            const urlObj = new URL(input, window.location.origin);
+            let colmenaIdStr = urlObj.searchParams.get('colmenaId');
+            
+            if (method === 'GET') {
+                let colmenas = JSON.parse(localStorage.getItem('colmenas')).filter(c => c.estado !== 'de_baja');
+                if (!colmenaIdStr && colmenas.length > 0) {
+                    colmenaIdStr = String(colmenas[0].db_id);
+                }
+                const colId = parseInt(colmenaIdStr);
+                const col = colmenas.find(c => c.db_id === colId);
+
+                let mantenimientos = JSON.parse(localStorage.getItem('mantenimientos')) || [];
+                let filteredMants = mantenimientos.filter(m => m.colmena_id === colId);
+
+                let response = {
+                    modulo: {
+                        identificador: col ? (col.monitoreo !== 'Sin asignar' ? col.monitoreo : "Sin registrar") : "N/A",
+                        tipo: col ? (col.monitoreo !== 'Sin asignar' ? "Interno + ambiental" : "N/A") : "N/A",
+                        estado: col ? (col.monitoreo !== 'Sin asignar' ? "activo" : "inactivo") : "inactivo",
+                        fecha_instalacion: "12/02/2026",
+                        total_eventos: filteredMants.length
+                    },
+                    eventos: filteredMants.map(m => ({
+                        id: m.id,
+                        tipo_evento: m.tipo_evento,
+                        fecha: m.fecha.split('-').reverse().join('/'), // Convert YYYY-MM-DD to DD/MM/YYYY
+                        descripcion: m.descripcion
+                    })),
+                    colmenas: colmenas.map(c => ({
+                        id: c.db_id,
+                        codigo: c.id,
+                        apiario: c.apiario
+                    }))
+                };
+                return jsonResponse(response);
+            }
+
+            if (method === 'POST') {
+                let list = JSON.parse(localStorage.getItem('mantenimientos')) || [];
+                let newMant = {
+                    id: Date.now(),
+                    colmena_id: parseInt(body.colmena_id),
+                    tipo_evento: body.tipo_evento,
+                    fecha: body.fecha,
+                    descripcion: body.descripcion
+                };
+                list.push(newMant);
+                localStorage.setItem('mantenimientos', JSON.stringify(list));
+                return jsonResponse({ mensaje: "Evento de mantenimiento guardado" });
+            }
         }
 
         // Fallback: si no es ninguna ruta mockeada, usar fetch original
