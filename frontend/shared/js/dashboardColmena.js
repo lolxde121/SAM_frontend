@@ -198,7 +198,11 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchDashboardData();
 
     document.getElementById("btn-mantenimiento").addEventListener("click", () => {
-        alert("Funcionalidad de mantenimiento en construcción.");
+        if (colmenaId) {
+            window.location.href = `mantenimientoModulo.html?colmenaId=${colmenaId}`;
+        } else {
+            window.location.href = 'mantenimientoModulo.html';
+        }
     });
 
     const btnIa = document.getElementById("btn-ia");

@@ -60,19 +60,20 @@
     opacity: 1;
 }
 
-.modal-content {
-    background-color: var(--color-bg-card);
+.modal-card {
+    background-color: #1A1206;
     border: 1px solid var(--color-border);
-    border-radius: 16px;
+    border-radius: 20px;
     width: 100%;
     max-width: 480px;
-    padding: 32px;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    padding: 40px;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     transform: translateY(20px);
     transition: transform 0.3s ease;
 }
 
-.modal-overlay.active .modal-content {
+.modal-overlay.active .modal-card {
     transform: translateY(0);
 }
 
@@ -95,18 +96,21 @@
     margin: 0;
 }
 
-.btn-close-modal {
-    background: transparent;
+.btn-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: none;
     border: none;
+    font-size: 28px;
     color: var(--color-text-gray);
-    font-size: 24px;
-    line-height: 1;
     cursor: pointer;
+    line-height: 1;
     transition: color 0.2s;
 }
 
-.btn-close-modal:hover {
-    color: var(--color-alert-red);
+.btn-close:hover {
+    color: var(--color-primary);
 }
 
 .modal-form .form-group {

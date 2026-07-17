@@ -79,18 +79,54 @@
                 </div>
             </section>
         </main>
+        <!-- ========== BARRA DE NAVEGACIÓN MÓVIL ========== -->
+        <nav class="mobile-nav" aria-label="Navegación móvil">
+            <a href="dashboardGlobal.html" class="mobile-nav-item">
+                <img src="../assets/icons/dashboard.svg" alt="" class="mobile-nav-icon">
+                <span>Dashboard</span>
+            </a>
+            <a href="gestionApiarios.html" class="mobile-nav-item">
+                <img src="../assets/icons/apiarios.svg" alt="" class="mobile-nav-icon">
+                <span>Apiarios</span>
+            </a>
+            <a href="gestionColmenas.html" class="mobile-nav-item">
+                <img src="../assets/icons/colmenas.svg" alt="" class="mobile-nav-icon">
+                <span>Colmenas</span>
+            </a>
+            <a href="alertas.html" class="mobile-nav-item">
+                <img src="../assets/icons/alertas.svg" alt="" class="mobile-nav-icon">
+                <span>Alertas</span>
+            </a>
+            <a href="historialVisita.html" class="mobile-nav-item">
+                <img src="../assets/icons/visitas.svg" alt="" class="mobile-nav-icon">
+                <span>Visitas</span>
+            </a>
+            <a href="historial.html" class="mobile-nav-item">
+                <img src="../assets/icons/historial.svg" alt="" class="mobile-nav-icon">
+                <span>Historial</span>
+            </a>
+            <a href="gestionUsuarios.html" class="mobile-nav-item active">
+                <img src="../assets/icons/usuarios.svg" alt="" class="mobile-nav-icon">
+                <span>Usuarios</span>
+            </a>
+            <a href="miCuenta.html" class="mobile-nav-item">
+                <img src="../assets/icons/usuarios.svg" alt="" class="mobile-nav-icon">
+                <span>Mi Cuenta</span>
+            </a>
+        </nav>
+        
 
         <!-- =========================================
              MODAL: ASIGNAR A APIARIO (Oculto por defecto)
         ========================================= -->
         <div id="modal-asignar" class="modal-overlay">
-            <div class="modal-content">
+            <div class="modal-card">
                 <div class="modal-header">
                     <div>
                         <h3 class="modal-title">Asignar a apiario</h3>
                         <p class="modal-subtitle">Da acceso de monitoreo a un apicultor</p>
                     </div>
-                    <button class="btn-close-modal" id="btn-cerrar-formulario">&times;</button>
+                    <button class="btn-close" id="btn-cerrar-formulario">&times;</button>
                 </div>
 
                 <form id="form-gestionUsuarios" class="modal-form"> 
@@ -137,13 +173,13 @@
              MODAL: CREAR APICULTOR
         ========================================= -->
         <div id="modal-crear-apicultor" class="modal-overlay">
-            <div class="modal-content modal-large">
+            <div class="modal-card modal-large">
                 <div class="modal-header">
                     <div>
                         <h3 class="modal-title">Nuevo apicultor</h3>
                         <p class="modal-subtitle">Crea la cuenta de acceso y asígnale apiarios</p>
                     </div>
-                    <button class="btn-close-modal" id="btn-cerrar-crear">&times;</button>
+                    <button class="btn-close" id="btn-cerrar-crear">&times;</button>
                 </div>
 
                 <form id="form-crear-apicultor" class="modal-form split-form">
