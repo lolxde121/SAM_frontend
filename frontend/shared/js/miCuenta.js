@@ -98,6 +98,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            // Validar formato de correo electrónico
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(correo)) {
+                mostrarToast('error', 'Formato de correo incorrecto', 'Por favor ingresa un correo electrónico válido');
+                return;
+            }
+
             // Si intenta cambiar la contraseña, debe ingresar ambas
             if ((pActual && !pNueva) || (!pActual && pNueva)) {
                 mostrarToast('error', 'Cambio de contraseña', 'Para cambiar la contraseña debes ingresar la contraseña actual y la nueva');

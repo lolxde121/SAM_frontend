@@ -106,10 +106,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const reinaVista = checkboxReina ? checkboxReina.checked : false;
             const notas = textareaNotas ? textareaNotas.value : '';
             const kgCosechados = (inputKg && inputKg.value) ? parseFloat(inputKg.value) : 0;
-            const calidadMiel = inputCalidad ? inputCalidad.value : '';
+            const calidadMiel = inputCalidad ? inputCalidad.value.trim() : '';
 
             if (!colmenaId || !estadoColonia || !fecha) {
-                alert('Por favor selecciona una colmena, ingresa el estado de la colonia y la fecha.');
+                alert('Por favor selecciona una colmena, ingresa el estado de la colonia y la fecha de la visita.');
+                return;
+            }
+
+            if (isNaN(kgCosechados) || kgCosechados < 0) {
+                alert('La cantidad de miel cosechada no puede ser negativa.');
+                return;
+            }
+
+            if (kgCosechados > 0 && !calidadMiel) {
+                alert('Por favor ingresa la calidad de la miel cosechada.');
                 return;
             }
 

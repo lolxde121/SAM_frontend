@@ -128,12 +128,18 @@ document.addEventListener("DOMContentLoaded", () => {
     formNuevo.addEventListener("submit", (e) => {
         e.preventDefault();
         
+        const microclimaVal = document.getElementById("api-microclima").value;
+        if (!microclimaVal) {
+            showErrorToast("Campo requerido", "Por favor selecciona un microclima de la lista.");
+            return;
+        }
+        
         const payload = {
             nombre: document.getElementById("api-nombre").value,
             estado: document.getElementById("api-estado").value,
             municipio: document.getElementById("api-municipio").value,
             localidad: document.getElementById("api-localidad").value,
-            microclimaId: document.getElementById("api-microclima").value
+            microclimaId: microclimaVal
         };
 
         const url = currentEditId ? `/api/gestion/apiarios/${currentEditId}` : "/api/gestion/apiarios";
