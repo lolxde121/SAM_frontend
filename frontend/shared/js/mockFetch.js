@@ -267,11 +267,19 @@
             let colmenas = JSON.parse(localStorage.getItem('colmenas')).filter(c => c.estado !== 'de_baja');
 
             if (method === 'GET') {
-                return jsonResponse(colmenas);
+                let mapped = colmenas.map(c => {
+                    let estadoRaw = c.estadoRaw || (c.estado === 'verde' ? 'activa' : 'inactiva');
+                    return {
+                        ...c,
+                        estadoRaw: estadoRaw
+                    };
+                });
+                return jsonResponse(mapped);
             }
             if (method === 'POST') {
                 let apiarios = JSON.parse(localStorage.getItem('apiarios'));
                 let ap = apiarios.find(a => String(a.id) === String(body.apiario_id));
+                let est = body.estado || "activa";
 
                 let newCol = {
                     db_id: Date.now(),
@@ -280,8 +288,9 @@
                     apiario_id: parseInt(body.apiario_id),
                     monitoreo: "Sin asignar",
                     ecotipo: body.ecotipo || "Apis mellifera",
-                    estado: "verde",
-                    estadoTexto: "Saludable"
+                    estadoRaw: est,
+                    estado: est === "activa" ? "verde" : "rojo",
+                    estadoTexto: est === "activa" ? "Saludable" : "Atención Requerida"
                 };
 
                 let list = JSON.parse(localStorage.getItem('colmenas'));
@@ -300,8 +309,17 @@
             if (method === 'PUT') {
                 let idx = list.findIndex(c => c.db_id === id);
                 if (idx !== -1) {
+                    let apiarios = JSON.parse(localStorage.getItem('apiarios'));
+                    let ap = apiarios.find(a => String(a.id) === String(body.apiario_id));
+                    let est = body.estado || "activa";
+
                     list[idx].id = body.codigo;
                     list[idx].ecotipo = body.ecotipo;
+                    list[idx].apiario_id = parseInt(body.apiario_id);
+                    list[idx].apiario = ap ? ap.nombre : list[idx].apiario;
+                    list[idx].estadoRaw = est;
+                    list[idx].estado = est === "activa" ? "verde" : "rojo";
+                    list[idx].estadoTexto = est === "activa" ? "Saludable" : "Atención Requerida";
                 }
                 localStorage.setItem('colmenas', JSON.stringify(list));
                 return jsonResponse({ mensaje: "Colmena actualizada" });
